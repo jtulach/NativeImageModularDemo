@@ -15,4 +15,41 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>native</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>native</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>${java.home}/bin/native-image</executable>
+                                    <arguments>
+                                        <arg>-Ob</arg>
+                                        <arg>-o</arg>
+                                        <arg>${project.build.directory}/NativeImageModularDemo</arg>
+                                        <arg>-p</arg>
+                                        <classpath/>
+                                        <arg>-m</arg>
+                                        <arg>Api/${exec.mainClass}</arg>
+                                        <arg>--add-modules</arg>
+                                        <arg>ALL-MODULE-PATH</arg>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
