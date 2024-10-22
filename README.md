@@ -17,3 +17,16 @@ Hi from Impl!
 ```
 
 With that working, let try GraalVM's `native-image`!
+
+```bash
+NativeImageModularDemo$ mvn clean install -Pnative
+NativeImageModularDemo$ ./impl/target/NativeImageModularDemo
+NativeImageModularDemo with following modules:
+  Impl
+  Api
+Found no API provider. Fix native-image support for modular ServiceLoader!
+```
+As can be seen `native-image` properly enables both JPMS modules - e.g.
+`Api` and `Impl`, but the service registered by `Impl` isn't visible
+automatically.
+
